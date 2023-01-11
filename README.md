@@ -1,17 +1,4 @@
-# walk
+An app to help students walk together back to their houses at night
+![Screenshot_1672399782](https://user-images.githubusercontent.com/91571142/210065800-b8d1f6d7-dcdc-4e87-9ede-35371367e43e.png)
+![Screenshot_1672399784](https://user-images.githubusercontent.com/91571142/210065802-4469d67f-627b-41e9-b8ef-32de393d7f9c.png)
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Flutter-WalkWithMe
