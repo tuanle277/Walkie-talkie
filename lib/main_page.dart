@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:walk/helper/house_card.dart';
 import 'package:walk/model/request.dart';
 
 class MainPage extends StatelessWidget {
@@ -9,34 +10,50 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemBuilder: (
-              context,
-              index,
-            ) {
-              return InkWell(
-                child: Card(
-                  child: SizedBox(
-                    height: mediaQuery.height * 0.13,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                      ),
-                      child: Text("My destination is " +
-                          _listOfRequest[index].destination),
-                    ),
+      body: SizedBox(
+        height: mediaQuery.height,
+        width: mediaQuery.width,
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: mediaQuery.height * 0.16,
+              child: Center(
+                child: Text(
+                  "Requests",
+                  style: TextStyle(
+                    fontSize: 22,
                   ),
                 ),
-              );
-            },
-            itemCount: _listOfRequest.length,
-          ),
+              ),
+            ),
+            SizedBox(
+              height: mediaQuery.height * 0.7,
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemBuilder: (
+                  context,
+                  index,
+                ) {
+                  return InkWell(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Card(
+                        child: SizedBox(
+                          height: mediaQuery.height * 0.2,
+                          child: HouseCard(
+                            _listOfRequest[index].address,
+                            "2.1km",
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: _listOfRequest.length,
+              ),
+            ),
+          ],
         ),
       ),
     );

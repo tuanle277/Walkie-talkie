@@ -48,9 +48,6 @@ class TextFieldWithBoxShadow extends StatelessWidget {
                   offset: Offset(3, 3),
                 ),
               ],
-              // borderRadius: BorderRadius.circular(
-              //   20.0,
-              // ),
             ),
           ),
           Container(
@@ -60,11 +57,6 @@ class TextFieldWithBoxShadow extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.08,
             ),
-            // decoration: BoxDecoration(
-            //   borderRadius: BorderRadius.circular(
-            //     20,
-            //   ),
-            // ),
             child: TextField(
               decoration: InputDecoration(
                 fillColor: Colors.white,

@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _width = 100;
 
-  void change_screen(String screenName) {
+  void changeScreen(String screenName) {
     setState(() {
       _width = 250;
     });
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: InkWell(
-        onTap: () => change_screen("/signinpage"),
+        onTap: () => changeScreen("/signinpage"),
         child: SizedBox(
           height: mediaQuery.height,
           width: mediaQuery.width,
@@ -39,11 +39,11 @@ class _HomePageState extends State<HomePage> {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    'Habit Tracker',
+                    'Walk with me',
                     style: TextStyle(
                       fontSize: mediaQuery.width / 8,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xffC28E0E),
+                      color: const Color(0xffC28E0E),
                     ),
                   ),
                 ),

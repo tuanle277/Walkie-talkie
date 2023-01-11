@@ -1,5 +1,8 @@
 class Request {
-  final String destination;
+  final String address;
+  late String category;
+  // late String openTime;
+  // late String distance;
 
-  Request(this.destination);
+  Request(this.address, this.category);
 }

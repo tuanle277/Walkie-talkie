@@ -28,16 +28,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Request> _dummyListOfRequest = [
-    Request("Common drive"),
-    Request("DePauw"),
-    Request("Purdue"),
-    Request("Lafayette"),
-    Request("Columbia"),
-    Request("Common drive"),
-    Request("DePauw"),
-    Request("Purdue"),
-    Request("Lafayette"),
-    Request("Columbia"),
+    Request(
+        "Commdriveasjkgbusrguksrgfgyukasfgyarsukfgya sfgukaskrbuygavbksurguagrtuaryugtaygrbtgurftu",
+        'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
+    Request("Common drive", 'house'),
   ];
   @override
   Widget build(BuildContext context) {
