@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class HouseCard extends StatelessWidget {
+class HouseCard extends StatefulWidget {
   String address;
   String distance;
   HouseCard(this.address, this.distance);
 
+  @override
+  State<HouseCard> createState() => _HouseCardState();
+}
+
+class _HouseCardState extends State<HouseCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,10 +39,10 @@ class HouseCard extends StatelessWidget {
               width: size.width * 0.5,
               height: size.height * 0.2,
               child: Text(
-                address,
+                widget.address,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: size.width * 0.1 * 0.3,
+                  fontSize: size.width * 0.1 * 0.35,
                 ),
               ),
             ),
@@ -66,11 +71,18 @@ class HouseCard extends StatelessWidget {
                   size: 20,
                 ),
                 Text(
-                  distance,
+                  widget.distance,
                 ),
               ],
             ),
           ),
+          // Positioned(
+          //   right: 20,
+          //   top: 65,
+          //   child: Text(
+          //     requestedText,
+          //   ),
+          // )
         ],
       ),
     );

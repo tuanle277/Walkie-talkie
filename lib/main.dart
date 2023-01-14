@@ -5,6 +5,7 @@ import 'package:walk/model/normal_request.dart';
 import 'package:walk/sign_in_screen.dart';
 
 import 'home_page.dart';
+import 'chat_room.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         '/mainpage': ((context) => MainPage(
               _dummyListOfRequest,
             )),
+        '/chatroom': ((context) => ChatPage())
       },
     );
   }
