@@ -50,6 +50,7 @@ dependencies:
   open_filex: ^4.3.2
   uuid: ^3.0.7
   bubble: ^1.2.1
+  overlay_support: ^2.1.0
 
 dev_dependencies:
   flutter_test:

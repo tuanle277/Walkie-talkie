@@ -4,6 +4,8 @@ import 'package:walk/model/house_request.dart';
 import 'package:walk/model/normal_request.dart';
 import 'package:walk/sign_in_screen.dart';
 
+import 'package:overlay_support/overlay_support.dart';
+
 import 'home_page.dart';
 import 'chat_room.dart';
 
@@ -15,12 +17,13 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return OverlaySupport(
+        child: MaterialApp(
       title: 'Walk with me',
       theme: ThemeData(fontFamily: "Montserrat"),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
-    );
+    ));
   }
 }
 
@@ -45,6 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
     HouseRequest("Common drive", 'house', '2.1km'),
   ];
 
+  addRe(category, address) {
+    var newRequest;
+    if (category == "house") {
+      newRequest = HouseRequest(address, category, "3.5km");
+    } else {
+      newRequest = NormalRequest("Jimmy John", address, "Restaurant", "4.0km");
+    }
+    setState(() {
+      _dummyListOfRequest.insert(0, newRequest);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,9 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       home: const HomePage(),
       routes: {
         '/signinpage': (context) => SignInScreen(),
-        '/mainpage': ((context) => MainPage(
-              _dummyListOfRequest,
-            )),
+        '/mainpage': ((context) => MainPage(_dummyListOfRequest, addRe)),
         '/chatroom': ((context) => ChatPage())
       },
     );
