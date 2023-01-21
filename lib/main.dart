@@ -3,6 +3,7 @@ import 'package:walk/main_page.dart';
 import 'package:walk/model/house_request.dart';
 import 'package:walk/model/normal_request.dart';
 import 'package:walk/sign_in_screen.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'home_page.dart';
 import 'chat_room.dart';
@@ -30,6 +31,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Position position;
+
+  void _getUserPosition() async {
+    Position userLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      position = userLocation;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserPosition();
+  }
+
   final List _dummyListOfRequest = [
     HouseRequest("925 Hilltop dr", 'house', '2.1km'),
     NormalRequest("Buffalo Wild Wings", "32 jump street", "restaurant", "3km"),
