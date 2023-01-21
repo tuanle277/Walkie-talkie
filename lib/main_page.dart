@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:walk/helper/house_card.dart';
 import 'package:walk/helper/normal_card.dart';
 import 'package:overlay_support/overlay_support.dart';
-
+import 'package:walk/model/house_request.dart';
+import 'package:walk/model/normal_request.dart';
 import 'chat_room.dart';
+
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 class MainPage extends StatefulWidget {
   final List _listOfHouseRequest;
@@ -19,11 +24,29 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+final Set _myRequest = {};
+
+TwilioFlutter twilioFlutter = TwilioFlutter(
+    accountSid:
+        'AC80ec82d005d37e1db39f0738146bacd4', // replace *** with Account SID
+    authToken:
+        'b9c257929cde633edc422e2c9cf40589', // replace xxx with Auth Token
+    twilioNumber: '+13133854824' // replace .... with Twilio Number
+    );
+
+void sendSMS(String number) async {
+  print("send SMS");
+  twilioFlutter.sendSMS(
+      toNumber: number, messageBody: 'Sarah wants to walk with you!');
+}
+
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(milliseconds: 1000), () {
+    int appear = Random().nextInt(2000) + 3000;
+    Future.delayed(Duration(milliseconds: appear), () {
 // Here you can write your code
+      sendSMS("+17657122276");
 
       showOverlayNotification((context) {
         return Card(
@@ -40,9 +63,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   content: const Text(
-                    "Class year: 2022 \n do you want to go with this person?",
+                    "Class year: 2022 \n\nDo you want to walk with this person?",
                     style: TextStyle(
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   actions: <Widget>[
@@ -81,16 +104,15 @@ class _MainPageState extends State<MainPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: const Text('Wants to travel with you'),
+                subtitle: const Text('Wants to walk with you!'),
                 trailing:
                     IconButton(icon: const Icon(Icons.close), onPressed: () {}),
               ),
             ),
           ),
         );
-      }, duration: const Duration(milliseconds: 4000));
+      }, duration: const Duration(milliseconds: 7000));
     });
-    final Set _myRequest = {};
     String requestType = "house";
     final _address = TextEditingController();
     Size mediaQuery = MediaQuery.of(context).size;
@@ -300,6 +322,19 @@ class _MainPageState extends State<MainPage> {
                                       if (_address.text.isEmpty) {
                                         return;
                                       }
+                                      var newRe;
+                                      if (requestType == "house") {
+                                        newRe = HouseRequest(_address.text,
+                                            requestType, "3.5km");
+                                      } else {
+                                        newRe = NormalRequest(
+                                            "Jimmy John",
+                                            _address.text,
+                                            requestType,
+                                            "4.0km");
+                                      }
+                                      _myRequest.add(newRe);
+                                      print(_myRequest);
                                       widget.addRe(requestType, _address.text);
                                       Navigator.pop(context);
                                     },

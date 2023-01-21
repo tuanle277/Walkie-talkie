@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
 
   void changeScreen(String screenName) {
     setState(() {
-      _width = 250;
+      _width = 280;
     });
     Timer(const Duration(seconds: 2), () {
       Navigator.pushNamed(context, screenName);
@@ -49,18 +49,19 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Positioned.fill(
-                top: 250,
+                top: 270,
                 child: Align(
-                    alignment: Alignment.topCenter,
-                    child: AnimatedContainer(
-                      duration: const Duration(
-                        seconds: 2,
-                      ),
-                      curve: Curves.fastOutSlowIn,
-                      height: 2,
-                      width: _width,
-                      color: Colors.black,
-                    )),
+                  alignment: Alignment.topCenter,
+                  child: AnimatedContainer(
+                    duration: const Duration(
+                      seconds: 2,
+                    ),
+                    curve: Curves.fastOutSlowIn,
+                    height: 2,
+                    width: _width,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               Positioned.fill(
                 top: 400,

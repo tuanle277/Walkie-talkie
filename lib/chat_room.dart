@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,20 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bubble/bubble.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => const MaterialApp(
         home: ChatPage(),
@@ -40,11 +47,27 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
   final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
+  final _user1 = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3aw');
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _loadMessages();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(40.421255, -86.9323616);
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   @override
@@ -82,9 +105,9 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Text(
-                          "Going to: ",
+                          "Going to: Crosswalk Commons, 925 Hilltop Dr, West Lafayette, IN 47906",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -103,20 +126,50 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
         ),
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          showUserAvatars: true,
-          showUserNames: true,
-          user: _user,
-          bubbleBuilder: _bubbleBuilder,
-          theme: const DefaultChatTheme(
-            inputBackgroundColor: Color(0xffCEB888),
-          ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.chat_bubble), label: "Chat"),
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map")
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedFontSize: 20,
+          selectedIconTheme:
+              IconThemeData(color: Colors.orangeAccent, size: 24),
+          selectedItemColor: Colors.orangeAccent,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          type: BottomNavigationBarType.shifting,
         ),
+        body: _selectedIndex == 0
+            ? Chat(
+                messages: _messages,
+                onAttachmentPressed: _handleAttachmentPressed,
+                onMessageTap: _handleMessageTap,
+                onPreviewDataFetched: _handlePreviewDataFetched,
+                onSendPressed: _handleSendPressed,
+                showUserAvatars: true,
+                showUserNames: true,
+                user: _user,
+                bubbleBuilder: _bubbleBuilder,
+                theme: const DefaultChatTheme(
+                  inputBackgroundColor: Color(0xffCEB888),
+                ),
+              )
+            : SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  "assets/images/map_demo.png",
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+        // GoogleMap(
+        //     onMapCreated: _onMapCreated,
+        //     initialCameraPosition: CameraPosition(
+        //       target: _center,
+        //       zoom: 11.0,
+        //     ),
+        //   ),
       );
 
   Widget _bubbleBuilder(
@@ -296,12 +349,23 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleSendPressed(types.PartialText message) {
-    final textMessage = types.TextMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      text: message.text,
-    );
+    int index = Random().nextInt(2);
+    var textMessage;
+    if (index == 0) {
+      textMessage = types.TextMessage(
+        author: _user,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: message.text,
+      );
+    } else {
+      textMessage = types.TextMessage(
+        author: _user1,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: message.text,
+      );
+    }
 
     _addMessage(textMessage);
   }
