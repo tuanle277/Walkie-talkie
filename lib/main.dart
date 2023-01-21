@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:walk/main_page.dart';
-import 'package:walk/model/house_request.dart';
-import 'package:walk/model/normal_request.dart';
-import 'package:walk/sign_in_screen.dart';
-
 import 'package:overlay_support/overlay_support.dart';
 
+import 'package:walk/model/house_request.dart';
+import 'package:walk/model/normal_request.dart';
+import './model/user.dart';
+
+import 'package:walk/sign_in_screen.dart';
+import 'package:walk/main_page.dart';
 import 'home_page.dart';
 import 'chat_room.dart';
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:walk/helper/text_field_with_box_shadow.dart';
+import 'package:collection/collection.dart';
 import 'helper/my_bezier_curve.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
-
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
@@ -12,6 +11,15 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final List _dummyListOfUsers = [
+    ["khacviet_2025@purdue.edu", "khoivietkhac2003"],
+    ["tuanle_2025@purdue.edu", "tuantuan1"],
+    ["datvuong_2025@purdue.edu", "datvuong2003"]
+  ];
+
+  Function eq = const ListEquality().equals;
+
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
@@ -68,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             TextFieldWithBoxShadow(
               errorText: "Enter a valid input",
-              labelText: "Username",
+              labelText: "Username/Student email",
               controller: _usernameController,
               width: mediaQuery.width,
             ),
@@ -80,6 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
               labelText: "Password",
               controller: _passwordController,
               width: mediaQuery.width,
+              obscuredText: true,
             ),
             SizedBox(
               height: mediaQuery.height * 0.06,
@@ -104,7 +113,20 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, "/mainpage"),
+                  onPressed: () {
+                    print(_dummyListOfUsers);
+                    if (_usernameController.text.isNotEmpty &&
+                        _passwordController.text.isNotEmpty) {
+                      for (int i = 0; i < _dummyListOfUsers.length; ++i) {
+                        if (eq([
+                          _usernameController.text,
+                          _passwordController.text
+                        ], _dummyListOfUsers[i])) {
+                          Navigator.pushNamed(context, "/mainpage");
+                        }
+                      }
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       shadowColor: Colors.transparent),

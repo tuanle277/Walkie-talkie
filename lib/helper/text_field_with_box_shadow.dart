@@ -6,15 +6,17 @@ class TextFieldWithBoxShadow extends StatelessWidget {
   final TextEditingController? controller;
   final double height;
   final double width;
+  final bool obscuredText;
 
-  const TextFieldWithBoxShadow({
-    Key? key,
-    this.errorText,
-    this.labelText,
-    this.controller,
-    this.height = 50,
-    this.width = 300,
-  }) : super(key: key);
+  const TextFieldWithBoxShadow(
+      {Key? key,
+      this.errorText,
+      this.labelText,
+      this.controller,
+      this.height = 50,
+      this.width = 300,
+      this.obscuredText = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class TextFieldWithBoxShadow extends StatelessWidget {
               horizontal: width * 0.08,
             ),
             child: TextField(
+              obscureText: obscuredText,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
