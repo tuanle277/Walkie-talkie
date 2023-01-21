@@ -35,7 +35,6 @@ TwilioFlutter twilioFlutter = TwilioFlutter(
     );
 
 void sendSMS(String number) async {
-  print("send SMS");
   twilioFlutter.sendSMS(
       toNumber: number, messageBody: 'Sarah wants to walk with you!');
 }
@@ -114,6 +113,7 @@ class _MainPageState extends State<MainPage> {
       }, duration: const Duration(milliseconds: 7000));
     });
     String requestType = "house";
+    final _radiusController = TextEditingController();
     final _address = TextEditingController();
     Size mediaQuery = MediaQuery.of(context).size;
     bool chosen = false;
@@ -275,6 +275,25 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   SizedBox(
                                     width: mediaQuery.width * 0.3,
+                                    child: TextField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        labelText: "exposure radius",
+                                        labelStyle: TextStyle(
+                                          color: Colors.amber,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      controller: _radiusController,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: mediaQuery.width * 0.04,
+                                  ),
+                                  SizedBox(
+                                    width: mediaQuery.width * 0.15,
                                     child: DropdownButtonFormField(
                                       style: const TextStyle(
                                         color: Colors.amber,
@@ -299,7 +318,6 @@ class _MainPageState extends State<MainPage> {
                                       // Down Arrow Icon
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
-
                                       // Array list of items
                                       items: items.map((String items) {
                                         return DropdownMenuItem(
@@ -312,40 +330,44 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: mediaQuery.width * 0.2,
+                                    width: mediaQuery.width * 0.04,
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.amber,
                                     ),
                                     onPressed: () {
-                                      if (_address.text.isEmpty) {
+                                      if (_address.text.isEmpty ||
+                                          _radiusController.text.isEmpty) {
                                         return;
                                       }
                                       var newRe;
                                       if (requestType == "house") {
-                                        newRe = HouseRequest(_address.text,
-                                            requestType, "3.5km");
+                                        newRe = HouseRequest(
+                                            _address.text,
+                                            requestType,
+                                            _radiusController.text + "km");
                                       } else {
                                         newRe = NormalRequest(
                                             "Jimmy John",
                                             _address.text,
                                             requestType,
-                                            "4.0km");
+                                            _radiusController.text + "km");
                                       }
                                       _myRequest.add(newRe);
-                                      print(_myRequest);
-                                      widget.addRe(requestType, _address.text);
+                                      widget.addRe(requestType, _address.text,
+                                          _radiusController.text + "km");
                                       Navigator.pop(context);
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
+                                      width: mediaQuery.width * 0.2,
                                       height: mediaQuery.height * 0.065,
-                                      child: const Text(
+                                      child: Text(
                                         "Submit request",
                                         style: TextStyle(
-                                          color: Colors.white,
-                                        ),
+                                            color: Colors.white,
+                                            fontSize: mediaQuery.width * 0.025),
                                       ),
                                     ),
                                   ),

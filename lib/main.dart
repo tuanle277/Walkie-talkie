@@ -49,12 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
     HouseRequest("Common drive", 'house', '2.1km'),
   ];
 
-  addRe(category, address) {
+  addRe(category, address, distance) {
     var newRequest;
     if (category == "house") {
-      newRequest = HouseRequest(address, category, "3.5km");
+      newRequest = HouseRequest(address, category, distance);
     } else {
-      newRequest = NormalRequest("Jimmy John", address, "Restaurant", "4.0km");
+      newRequest = NormalRequest("Jimmy John", address, "Restaurant", distance);
     }
     setState(() {
       _dummyListOfRequest.insert(0, newRequest);
