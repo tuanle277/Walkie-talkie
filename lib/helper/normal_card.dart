@@ -16,7 +16,7 @@ class NormalCard extends StatelessWidget {
         children: [
           Positioned(
             left: 20,
-            top: 20,
+            top: size.height * 0.02,
             child: SizedBox(
               width: size.width * 0.8,
               height: size.height * 0.1,
@@ -70,7 +70,7 @@ class NormalCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 45,
+            top: size.height * 0.0625,
             left: 20,
             child: SizedBox(
               width: size.width * 0.65,

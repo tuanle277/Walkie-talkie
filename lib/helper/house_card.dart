@@ -18,7 +18,7 @@ class _HouseCardState extends State<HouseCard> {
         children: [
           Positioned(
             left: 20,
-            top: 20,
+            top: size.height * 0.02,
             child: SizedBox(
               width: size.width * 0.5,
               height: size.height * 0.2,
@@ -48,7 +48,7 @@ class _HouseCardState extends State<HouseCard> {
             ),
           ),
           Positioned(
-            top: 45,
+            top: size.height * 0.0625,
             left: 20,
             child: SizedBox(
               width: size.width * 0.65,
