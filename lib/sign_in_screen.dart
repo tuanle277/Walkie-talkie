@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:walk/helper/text_field_with_box_shadow.dart';
 import 'package:collection/collection.dart';
+import 'package:walk/model/user.dart';
 import 'helper/my_bezier_curve.dart';
+import 'dart:async';
 
 class SignInScreen extends StatefulWidget {
+  final List<UserInfo> _listOfUsers;
+
+  SignInScreen(this._listOfUsers);
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
@@ -11,13 +16,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  final List _dummyListOfUsers = [
-    ["khacviet_2025@purdue.edu", "khoivietkhac2003"],
-    ["tuanle_2025@purdue.edu", "tuantuan1"],
-    ["datvuong_2025@purdue.edu", "datvuong2003"],
-    ["a", "b"]
-  ];
 
   Function eq = const ListEquality().equals;
 
@@ -49,10 +47,10 @@ class _SignInScreenState extends State<SignInScreen> {
               padding: EdgeInsets.symmetric(
                 horizontal: mediaQuery.width * 0.09,
               ),
-              child: const Text(
+              child: Text(
                 "Login",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: mediaQuery.width * 0.08,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -100,11 +98,11 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               alignment: Alignment.centerRight,
               child: Container(
-                height: mediaQuery.height * 0.09,
+                height: mediaQuery.height * 0.12,
                 width: mediaQuery.width * 0.42,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    30,
+                    mediaQuery.width * 0.1,
                   ),
                   gradient: const LinearGradient(
                     colors: [
@@ -115,15 +113,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(_dummyListOfUsers);
                     if (_usernameController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty) {
-                      for (int i = 0; i < _dummyListOfUsers.length; ++i) {
+                      for (int i = 0; i < widget._listOfUsers.length; ++i) {
                         if (eq([
                           _usernameController.text,
                           _passwordController.text
-                        ], _dummyListOfUsers[i])) {
-                          Navigator.pushNamed(context, "/mainpage");
+                        ], [
+                          widget._listOfUsers[i].username,
+                          widget._listOfUsers[i].password
+                        ])) {
+                          Navigator.pushNamed(context, "mainpage");
                         }
                       }
                     }
@@ -131,10 +131,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   style: ElevatedButton.styleFrom(
                       primary: Colors.transparent,
                       shadowColor: Colors.transparent),
-                  child: Text(
-                    'Sign in',
-                    style: TextStyle(
-                      fontSize: mediaQuery.width * 0.045,
+                  child: Center(
+                    child: Text(
+                      'Sign in',
+                      style: TextStyle(
+                        fontSize: mediaQuery.width * 0.045,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

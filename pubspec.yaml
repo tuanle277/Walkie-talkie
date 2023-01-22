@@ -53,6 +53,7 @@ dependencies:
   overlay_support: ^2.1.0
   google_maps_flutter: ^2.2.3
   twilio_flutter: ^0.0.9
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

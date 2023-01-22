@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: InkWell(
-        onTap: () => changeScreen("/signinpage"),
+        onTap: () => changeScreen("signinpage"),
         child: SizedBox(
           height: mediaQuery.height,
           width: mediaQuery.width,
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    'Walk with me',
+                    'Walkie Talkie',
                     style: TextStyle(
                       fontSize: mediaQuery.width / 8,
                       fontWeight: FontWeight.bold,
