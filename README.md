@@ -2,11 +2,12 @@
 An app to help students walk together back to their houses at night.
 
 Features:
-- Interactive interface
+- Interactive UX.
+- Models adapted for API data fetching.
 - User identification using local dummy database (should be the entire student database of a school, including username/email and password)
 - Upload a request (either house destination or other verified places) and updates local and online database accordingly, choose a request that you want to walk with
-- Interactive chatbox with encoded user ids.
-- Local notification using overlay support, SMS notification using Twilio (trial)
+- Interactive chatbox with encoded user ids (the students' particular ids).
+- Local notification using overlay support, SMS notification using Twilio (trial).
 - Integrated google map with address selection and commutes and transmit to aid the walking process.
 
 
