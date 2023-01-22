@@ -10,7 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:walk/model/destination.dart';
 
 
-import 'package:walk/sign_in_screen.dart';
 import 'package:walk/main_page.dart';
 import 'home_page.dart';
 import 'chat_room.dart';
@@ -28,27 +27,33 @@ class MyApp extends StatelessWidget {
           title: 'Walk with me',
           theme: ThemeData(fontFamily: "Montserrat"),
           debugShowCheckedModeBanner: false,
-          home: MyHomePage(),
+          home: const MyHomePage(),
     ));
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static late Position position;
+  static Position? position;
 
   void _getUserPosition() async {
-    Position userLocation = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    LocationPermission permission;
 
-    setState(() {
-      position = userLocation;
-    });
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    } else {
+      position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    }
   }
+
 
   static double calculateDistance(lat1, lon1, lat2, lon2){
     var p = 0.017453292519943295;
@@ -60,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    super.initState();
     _getUserPosition();
+    super.initState();
   }
-  
+
   static final List _dummyListOfDestination = [
     DestinationInfo("925 Hilltop dr", 40.4346622, -86.9234766),
     DestinationInfo("Wilmeth Active Learning Center", 40.4273707, -86.9153639),
@@ -76,32 +81,32 @@ class _MyHomePageState extends State<MyHomePage> {
     RequestCard(_dummyListOfDestination[0],
                 calculateDistance(_dummyListOfDestination[0].latitude,
                                   _dummyListOfDestination[0].longitude,
-                                  position.latitude, position.longitude),
-                position.latitude, position.longitude),
+                                  position?.latitude, position?.longitude),
+                position?.latitude as double, position?.longitude as double),
 
     RequestCard(_dummyListOfDestination[1],
                 calculateDistance(_dummyListOfDestination[1].latitude,
                                   _dummyListOfDestination[1].longitude,
-                                  position.latitude, position.longitude),
-                position.latitude, position.longitude),
+                                  position?.latitude, position?.longitude),
+                position?.latitude as double, position?.longitude as double),
 
     RequestCard(_dummyListOfDestination[2],
                 calculateDistance(_dummyListOfDestination[2].latitude,
                                   _dummyListOfDestination[2].longitude,
-                                  position.latitude, position.longitude),
-                position.latitude, position.longitude),
+                                  position?.latitude, position?.longitude),
+                position?.latitude as double, position?.longitude as double),
 
     RequestCard(_dummyListOfDestination[3],
                 calculateDistance(_dummyListOfDestination[3].latitude,
                                   _dummyListOfDestination[3].longitude,
-                                  position.latitude, position.longitude),
-                position.latitude, position.longitude),
+                                  position?.latitude, position?.longitude),
+                position?.latitude as double, position?.longitude as double),
 
     RequestCard(_dummyListOfDestination[4],
                 calculateDistance(_dummyListOfDestination[4].latitude,
                                   _dummyListOfDestination[4].longitude,
-                                  position.latitude, position.longitude),
-                position.latitude, position.longitude),
+                                  position?.latitude, position?.longitude),
+                position?.latitude as double, position?.longitude as double),
 
   ];
 
@@ -110,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _dummyListOfCard.insert(0, request);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -119,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
       theme: ThemeData(fontFamily: 'Montserrat'),
       home: const HomePage(),
       routes: {
-        '/signinpage': (context) => SignInScreen(),
+        '/signinpage': (context) => const SignInScreen(),
         '/mainpage': ((context) => MainPage(_dummyListOfCard, addRe)),
         // '/chatroom': ((context) => ChatPage())
       },

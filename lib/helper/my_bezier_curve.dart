@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyBezierCurve extends StatelessWidget {
+  const MyBezierCurve({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ClipPath(
@@ -12,7 +14,7 @@ class MyBezierCurve extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Colors.amber[100]!,
-              Color(0xffCEB888),
+              const Color(0xffCEB888),
             ],
           ),
         ),
@@ -52,7 +54,7 @@ class CurvePath extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
 
-    paint.color = Color(0xff9D968D);
+    paint.color = const Color(0xff9D968D);
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = 5;
 

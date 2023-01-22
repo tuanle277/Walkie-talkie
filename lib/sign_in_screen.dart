@@ -4,6 +4,8 @@ import 'package:collection/collection.dart';
 import 'helper/my_bezier_curve.dart';
 
 class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
@@ -26,7 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
     Size mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body: SizedBox(
         height: mediaQuery.height,
         width: mediaQuery.width,
         child: Column(
@@ -39,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Transform.rotate(
                   angle: 0,
                   child: CustomPaint(
-                    child: MyBezierCurve(),
+                    // child: MyBezierCurve(),
                     painter: CurvePath(),
                   ),
                 ),
@@ -115,7 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(_dummyListOfUsers);
+                    // print(_dummyListOfUsers);
                     if (_usernameController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty) {
                       for (int i = 0; i < _dummyListOfUsers.length; ++i) {
@@ -129,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent,
+                      backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent),
                   child: Text(
                     'Sign in',

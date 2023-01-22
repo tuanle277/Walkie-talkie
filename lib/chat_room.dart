@@ -10,14 +10,11 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bubble/bubble.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:latlng/latlng.dart';
 
 class ChatPage extends StatefulWidget {
   String _address;
@@ -32,26 +29,10 @@ class _ChatPageState extends State<ChatPage> {
   final _user1 = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3aw');
   int _selectedIndex = 0;
 
-  late Position position;
-
-  Future<Position> _getUserPosition() async {
-    Position userLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-    setState(() {
-      position = userLocation;
-    });
-
-    return position;
-  }
-
-  late final Position _center;
-
-
   @override
   void initState() {
     super.initState();
     _loadMessages();
-    _center = _getUserPosition() as Position;
   }
 
   void _onItemTapped(int index) {

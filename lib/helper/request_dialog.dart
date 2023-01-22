@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RequestDialog extends StatefulWidget {
   bool chosen;
 
-  RequestDialog(this.chosen);
+  RequestDialog(this.chosen, {super.key});
   @override
   State<RequestDialog> createState() => _RequestDialogueState();
 }

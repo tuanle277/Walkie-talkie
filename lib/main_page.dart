@@ -16,7 +16,7 @@ class MainPage extends StatefulWidget {
 
   MainPage(
     this._listOfCard,
-    this.addRe,
+    this.addRe, {super.key}
   );
 
   @override

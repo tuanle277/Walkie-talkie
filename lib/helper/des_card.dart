@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DesCard extends StatefulWidget {
   String address;
   String distance;
-  DesCard(this.address, this.distance);
+  DesCard(this.address, this.distance, {super.key});
 
   @override
   State<DesCard> createState() => _DesCardState();
