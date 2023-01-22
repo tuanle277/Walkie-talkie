@@ -4,10 +4,11 @@ import 'package:walk/model/request_card.dart';
 
 import './model/request.dart';
 import './model/user.dart';
+import 'dart:math';
 import 'package:walk/sign_in_screen.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:walk/model/destination.dart';
 
-import 'package:overlay_support/overlay_support.dart';
 
 import 'package:walk/sign_in_screen.dart';
 import 'package:walk/main_page.dart';
@@ -38,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Position position;
+  static late Position position;
 
   void _getUserPosition() async {
     Position userLocation = await Geolocator.getCurrentPosition(
@@ -49,37 +50,64 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  static double calculateDistance(lat1, lon1, lat2, lon2){
+    var p = 0.017453292519943295;
+    var a = 0.5 - cos((lat2 - lat1) * p)/2 +
+        cos(lat1 * p) * cos(lat2 * p) *
+            (1 - cos((lon2 - lon1) * p))/2;
+    return 12742 * asin(sqrt(a));
+  }
+
   @override
   void initState() {
     super.initState();
     _getUserPosition();
   }
-
-  final List _dummyListOfRequest = [
-    Request("925 Hilltop dr", 2.1),
-    Request("32 jump street", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request(
-        "32 jump street (such as a letter or package) an envelope with an illegible address.",
-        2.1),
-    Request("Common drive", 2.1),
+  
+  static final List _dummyListOfDestination = [
+    DestinationInfo("925 Hilltop dr", 40.4346622, -86.9234766),
+    DestinationInfo("Wilmeth Active Learning Center", 40.4273707, -86.9153639),
+    DestinationInfo("Lilly Hall of Life Sciences", 40.4234801, -86.9202012),
+    DestinationInfo("402 Brown Street", 40.4231753, -86.9100458),
+    DestinationInfo("3630 South Street", 40.4180692, -86.879096)
   ];
 
   final List _dummyListOfCard = [
-    RequestCard(Request("925 Hilltop dr", 2.1), 40.425869, -86.908066),
-    RequestCard(Request("something", 3.1), 40.025869, -84.908066),
-    RequestCard(Request("yes", 1.1), 38.425869, -80.908066),
-    RequestCard(Request("candice st", 1.3), 40.215869, -90.928066),
-    RequestCard(Request("chocoma dr", 5.1), 30.425869, -84.902066),
-    RequestCard(Request("23 jump street st", 0.6), 39.325869, -83.908096),
+    RequestCard(_dummyListOfDestination[0],
+                calculateDistance(_dummyListOfDestination[0].latitude,
+                                  _dummyListOfDestination[0].longitude,
+                                  position.latitude, position.longitude),
+                position.latitude, position.longitude),
+
+    RequestCard(_dummyListOfDestination[1],
+                calculateDistance(_dummyListOfDestination[1].latitude,
+                                  _dummyListOfDestination[1].longitude,
+                                  position.latitude, position.longitude),
+                position.latitude, position.longitude),
+
+    RequestCard(_dummyListOfDestination[2],
+                calculateDistance(_dummyListOfDestination[2].latitude,
+                                  _dummyListOfDestination[2].longitude,
+                                  position.latitude, position.longitude),
+                position.latitude, position.longitude),
+
+    RequestCard(_dummyListOfDestination[3],
+                calculateDistance(_dummyListOfDestination[3].latitude,
+                                  _dummyListOfDestination[3].longitude,
+                                  position.latitude, position.longitude),
+                position.latitude, position.longitude),
+
+    RequestCard(_dummyListOfDestination[4],
+                calculateDistance(_dummyListOfDestination[4].latitude,
+                                  _dummyListOfDestination[4].longitude,
+                                  position.latitude, position.longitude),
+                position.latitude, position.longitude),
+
   ];
 
   addRe(request) {
     setState(() {
-      _dummyListOfRequest.insert(0, request);
+      _dummyListOfCard.insert(0, request);
     });
   }
 

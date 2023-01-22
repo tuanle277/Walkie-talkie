@@ -44,15 +44,14 @@ class _ChatPageState extends State<ChatPage> {
     return position;
   }
 
-  late final LatLng _center;
+  late final Position _center;
 
 
   @override
   void initState() {
     super.initState();
     _loadMessages();
-    _center = _getUserPosition() as LatLng;
-
+    _center = _getUserPosition() as Position;
   }
 
   void _onItemTapped(int index) {

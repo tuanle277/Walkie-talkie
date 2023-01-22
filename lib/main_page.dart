@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:walk/helper/des_card.dart';
-import 'package:walk/helper/normal_card.dart';
 import 'package:overlay_support/overlay_support.dart';
 import './model/request.dart';
 import 'chat_room.dart';

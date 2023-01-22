@@ -1,9 +1,10 @@
-import 'package:walk/model/request.dart';
+import 'package:walk/model/destination.dart';
 
 class RequestCard {
-  final Request request;
-  final double longitude;
-  final double latitude;
+  final DestinationInfo address;
+  final double distance;
+  final double currLongitude;
+  final double currLatitude;
 
-  RequestCard(this.request, this.latitude, this.longitude);
+  RequestCard(this.address, this.distance, this.currLatitude, this.currLongitude);
 }
