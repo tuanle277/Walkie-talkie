@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-An app to help students walk together back to their houses at night
-=======
+
 An app to help students walk together back to their houses at night.
 
 Features:
 - Interactive interface
-- User identification
+- User identification using local dummy database (should be the entire student database of a school, including username/email and password)
 - Upload a request (either house destination or other verified places) and updates local and online database accordingly, choose a request that you want to walk with
 - Interactive chatbox with encoded user ids.
 - Local notification using overlay support, SMS notification using Twilio (trial)
@@ -20,9 +18,6 @@ Features:
 <img width="500" alt="Screenshot 2023-01-21 at 3 31 11 AM" src="https://user-images.githubusercontent.com/91571142/213858945-88f96119-1f5e-46e2-a09d-57c7f8b23258.png">
 <img width="500" alt="Screenshot 2023-01-21 at 3 31 44 AM" src="https://user-images.githubusercontent.com/91571142/213858946-cc270e56-12c8-44de-8b32-be7c6a9dbc8f.png">
 <img width="502" alt="Screenshot 2023-01-21 at 7 57 44 AM" src="https://user-images.githubusercontent.com/91571142/213867893-11b4fd56-79c7-4383-86ee-6a84ad382fc5.png">
->>>>>>> 7d936532b1596ff77b9db058bdf353624dc1d448
+<img width="500" alt="Screenshot 2023-01-21 at 11 30 38 AM" src="https://user-images.githubusercontent.com/91571142/213876801-2da96563-3824-418f-b9fb-58533635d946.png">
+<img width="501" alt="Screenshot 2023-01-21 at 11 30 50 AM" src="https://user-images.githubusercontent.com/91571142/213876810-8f5cfb52-3437-45a9-b6c4-8d2e70b19800.png">
 
-![Screenshot_1673731224](https://user-images.githubusercontent.com/91571142/212497453-c65d8a61-04cf-4244-98a8-8fbd66b56a57.png)
-![Screenshot_1673731216](https://user-images.githubusercontent.com/91571142/212497457-9fca4bb7-ec37-4948-af30-458cd891c7aa.png)
-![Screenshot_1673731211](https://user-images.githubusercontent.com/91571142/212497460-c6483081-3ad0-46d0-a3cd-4dd144d367d6.png)
-![Screenshot_1673731190](https://user-images.githubusercontent.com/91571142/212497462-c5e638dd-1b2a-4171-9111-f0f84a0e444a.png)

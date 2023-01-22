@@ -1,22 +1,22 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:walk/helper/house_card.dart';
+import 'package:walk/helper/des_card.dart';
 import 'package:walk/helper/normal_card.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:walk/model/house_request.dart';
-import 'package:walk/model/normal_request.dart';
+import './model/request.dart';
 import 'chat_room.dart';
 
 import 'package:twilio_flutter/twilio_flutter.dart';
+import 'package:collection/collection.dart';
 
 class MainPage extends StatefulWidget {
-  final List _listOfHouseRequest;
+  final List _listOfCard;
 
   Function addRe;
 
   MainPage(
-    this._listOfHouseRequest,
+    this._listOfCard,
     this.addRe,
   );
 
@@ -24,7 +24,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-final Set _myRequest = {};
+final List _myRequest = [];
 
 TwilioFlutter twilioFlutter = TwilioFlutter(
     accountSid:
@@ -43,6 +43,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     int appear = Random().nextInt(2000) + 3000;
+    Function eq = const ListEquality().equals;
+
     Future.delayed(Duration(milliseconds: appear), () {
 // Here you can write your code
       sendSMS("+17657122276");
@@ -73,14 +75,7 @@ class _MainPageState extends State<MainPage> {
                       child: const Text('No'),
                     ),
                     TextButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const ChatPage();
-                          },
-                        ),
-                      ),
+                      onPressed: () {},
                       child: const Text('Yes'),
                     ),
                   ],
@@ -104,13 +99,16 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 subtitle: const Text('Wants to walk with you!'),
-                trailing:
-                    IconButton(icon: const Icon(Icons.close), onPressed: () {}),
+                trailing: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      OverlaySupportEntry.of(context)?.dismiss();
+                    }),
               ),
             ),
           ),
         );
-      }, duration: const Duration(milliseconds: 7000));
+      }, duration: const Duration(milliseconds: 5000));
     });
     String requestType = "house";
     final _radiusController = TextEditingController();
@@ -136,9 +134,18 @@ class _MainPageState extends State<MainPage> {
                 ) {
                   return InkWell(
                     onTap: () {
-                      if (!_myRequest
-                          .contains(widget._listOfHouseRequest[index])) {
-                        widget._listOfHouseRequest[index].chosen
+                      bool _exist = false;
+                      print(_myRequest);
+                      for (int i = 0; i < _myRequest.length; ++i) {
+                        if (_myRequest[i] ==
+                            widget._listOfCard[index].request) {
+                          _exist = true;
+                          break;
+                        }
+                      }
+                      print(_exist);
+                      if (!_exist) {
+                        widget._listOfCard[index].request.chosen
                             ? showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
@@ -159,11 +166,10 @@ class _MainPageState extends State<MainPage> {
                                       onPressed: () {
                                         setState(
                                           () {
-                                            widget._listOfHouseRequest[index]
+                                            widget._listOfCard[index].request
                                                     .chosen =
-                                                !widget
-                                                    ._listOfHouseRequest[index]
-                                                    .chosen;
+                                                !widget._listOfCard[index]
+                                                    .request.chosen;
                                           },
                                         );
                                         Navigator.pop(context);
@@ -193,11 +199,10 @@ class _MainPageState extends State<MainPage> {
                                       onPressed: () {
                                         setState(
                                           () {
-                                            widget._listOfHouseRequest[index]
+                                            widget._listOfCard[index].request
                                                     .chosen =
-                                                !widget
-                                                    ._listOfHouseRequest[index]
-                                                    .chosen;
+                                                !widget._listOfCard[index]
+                                                    .request.chosen;
                                           },
                                         );
                                         Navigator.pop(context);
@@ -207,36 +212,40 @@ class _MainPageState extends State<MainPage> {
                                   ],
                                 ),
                               );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ChatPage(
+                                  widget._listOfCard[index].request.address);
+                            },
+                          ),
+                        );
                       }
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Card(
-                        color: widget._listOfHouseRequest[index].chosen
+                        color: widget._listOfCard[index].request.chosen
                             ? Colors.green[300]
                             : Colors.grey[100],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: SizedBox(
-                          height: mediaQuery.height * 0.2,
-                          child: widget._listOfHouseRequest[index].category ==
-                                  'house'
-                              ? HouseCard(
-                                  widget._listOfHouseRequest[index].address,
-                                  widget._listOfHouseRequest[index].distance,
-                                )
-                              : NormalCard(
-                                  widget._listOfHouseRequest[index].name,
-                                  widget._listOfHouseRequest[index].address,
-                                  widget._listOfHouseRequest[index].distance,
-                                  widget._listOfHouseRequest[index].category),
-                        ),
+                            height: mediaQuery.height * 0.2,
+                            child: DesCard(
+                              widget._listOfCard[index].request.address,
+                              widget._listOfCard[index].request.distance
+                                      .toString() +
+                                  "km",
+                            )),
                       ),
                     ),
                   );
                 },
-                itemCount: widget._listOfHouseRequest.length,
+                itemCount: widget._listOfCard.length,
               ),
             ),
             InkWell(
@@ -274,7 +283,7 @@ class _MainPageState extends State<MainPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: mediaQuery.width * 0.3,
+                                    width: mediaQuery.width * 0.4,
                                     child: TextField(
                                       keyboardType: TextInputType.number,
                                       decoration: const InputDecoration(
@@ -293,43 +302,6 @@ class _MainPageState extends State<MainPage> {
                                     width: mediaQuery.width * 0.04,
                                   ),
                                   SizedBox(
-                                    width: mediaQuery.width * 0.15,
-                                    child: DropdownButtonFormField(
-                                      style: const TextStyle(
-                                        color: Colors.amber,
-                                      ),
-                                      // Initial Value
-                                      onChanged: (String? newValue) {
-                                        setState(
-                                          () {
-                                            requestType = newValue!;
-                                          },
-                                        );
-                                      },
-                                      onSaved: (String? newValue) {
-                                        setState(
-                                          () {
-                                            requestType = newValue!;
-                                          },
-                                        );
-                                      },
-                                      value: requestType,
-
-                                      // Down Arrow Icon
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      // Array list of items
-                                      items: items.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(items),
-                                        );
-                                      }).toList(),
-                                      // After selecting the desired option,it will
-                                      // change button value to selected value
-                                    ),
-                                  ),
-                                  SizedBox(
                                     width: mediaQuery.width * 0.04,
                                   ),
                                   ElevatedButton(
@@ -341,22 +313,11 @@ class _MainPageState extends State<MainPage> {
                                           _radiusController.text.isEmpty) {
                                         return;
                                       }
-                                      var newRe;
-                                      if (requestType == "house") {
-                                        newRe = HouseRequest(
-                                            _address.text,
-                                            requestType,
-                                            _radiusController.text + "km");
-                                      } else {
-                                        newRe = NormalRequest(
-                                            "Jimmy John",
-                                            _address.text,
-                                            requestType,
-                                            _radiusController.text + "km");
-                                      }
+                                      var newRe = Request(_address.text,
+                                          double.parse(_radiusController.text));
+
                                       _myRequest.add(newRe);
-                                      widget.addRe(requestType, _address.text,
-                                          _radiusController.text + "km");
+                                      widget.addRe(newRe);
                                       Navigator.pop(context);
                                     },
                                     child: Container(

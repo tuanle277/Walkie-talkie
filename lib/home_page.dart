@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: mediaQuery.width / 8,
                       fontWeight: FontWeight.bold,
-                      color: const Color(0xffC28E0E),
+                      color: const Color(0xffc28e0e),
                     ),
                   ),
                 ),

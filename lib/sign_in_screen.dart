@@ -15,7 +15,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final List _dummyListOfUsers = [
     ["khacviet_2025@purdue.edu", "khoivietkhac2003"],
     ["tuanle_2025@purdue.edu", "tuantuan1"],
-    ["datvuong_2025@purdue.edu", "datvuong2003"]
+    ["datvuong_2025@purdue.edu", "datvuong2003"],
+    ["a", "b"]
   ];
 
   Function eq = const ListEquality().equals;
