@@ -19,7 +19,7 @@ import 'package:bubble/bubble.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChatPage extends StatefulWidget {
-  String _address;
+  final String _address;
   ChatPage(this._address);
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -78,9 +78,9 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
-                          "Going to: Crosswalk Commons, 925 Hilltop Dr, West Lafayette, IN 47906",
+                          "Going to: " + widget._address,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),

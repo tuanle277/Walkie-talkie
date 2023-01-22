@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   addRe(request) {
     setState(() {
-      _dummyListOfRequest.insert(0, request);
+      _dummyListOfCard.insert(0, RequestCard(request, 38.425869, -80.908066));
     });
   }
 
