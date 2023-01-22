@@ -115,7 +115,6 @@ class _MainPageState extends State<MainPage> {
     final _address = TextEditingController();
     Size mediaQuery = MediaQuery.of(context).size;
     bool chosen = false;
-    var items = ["house", "other"];
     Color cardColor = chosen ? Colors.green[300]! : Colors.grey[100]!;
     return Scaffold(
       body: SizedBox(
@@ -135,7 +134,7 @@ class _MainPageState extends State<MainPage> {
                   return InkWell(
                     onTap: () {
                       bool _exist = false;
-                      print(_myRequest);
+                      // print(_myRequest);
                       for (int i = 0; i < _myRequest.length; ++i) {
                         if (_myRequest[i] ==
                             widget._listOfCard[index].request) {
@@ -143,7 +142,7 @@ class _MainPageState extends State<MainPage> {
                           break;
                         }
                       }
-                      print(_exist);
+                      // print(_exist);
                       if (!_exist) {
                         widget._listOfCard[index].request.chosen
                             ? showDialog<String>(
@@ -237,9 +236,7 @@ class _MainPageState extends State<MainPage> {
                             height: mediaQuery.height * 0.2,
                             child: DesCard(
                               widget._listOfCard[index].request.address,
-                              widget._listOfCard[index].request.distance
-                                      .toString() +
-                                  "km",
+                              "${widget._listOfCard[index].request.distance}km",
                             )),
                       ),
                     ),
@@ -254,7 +251,7 @@ class _MainPageState extends State<MainPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return Container(
-                      color: Color(0xff9D968D),
+                      color: const Color(0xff9D968D),
                       height: mediaQuery.height * 0.35,
                       child: Center(
                         child: Column(

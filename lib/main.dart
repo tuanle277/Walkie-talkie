@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverlaySupport(
         child: MaterialApp(
-      title: 'Walk with me',
-      theme: ThemeData(fontFamily: "Montserrat"),
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+          title: 'Walk with me',
+          theme: ThemeData(fontFamily: "Montserrat"),
+          debugShowCheckedModeBanner: false,
+          home: MyHomePage(),
     ));
   }
 }

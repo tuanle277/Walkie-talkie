@@ -20,7 +20,7 @@ class TextFieldWithBoxShadow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final errorStyle = const TextStyle(
+    const errorStyle = TextStyle(
       fontSize: 14,
     );
 

@@ -21,7 +21,7 @@ import 'package:latlng/latlng.dart';
 
 class ChatPage extends StatefulWidget {
   String _address;
-  ChatPage(this._address);
+  ChatPage(this._address, {super.key});
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -52,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     _loadMessages();
     _center = _getUserPosition() as LatLng;
+
   }
 
   void _onItemTapped(int index) {
@@ -126,9 +127,9 @@ class _ChatPageState extends State<ChatPage> {
           onTap: _onItemTapped,
           selectedFontSize: 20,
           selectedIconTheme:
-              IconThemeData(color: Colors.orangeAccent, size: 24),
+              const IconThemeData(color: Colors.orangeAccent, size: 24),
           selectedItemColor: Colors.orangeAccent,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           type: BottomNavigationBarType.shifting,
         ),
         body: _selectedIndex == 0
@@ -168,7 +169,6 @@ class _ChatPageState extends State<ChatPage> {
     required nextMessageInGroup,
   }) =>
       Bubble(
-        child: child,
         nipHeight: MediaQuery.of(context).size.height * 0.01,
         color: _user.id != message.author.id ||
                 message.type == types.MessageType.image
@@ -182,6 +182,7 @@ class _ChatPageState extends State<ChatPage> {
             : _user.id != message.author.id
                 ? BubbleNip.leftBottom
                 : BubbleNip.rightBottom,
+        child: child,
       );
 
   void _addMessage(types.Message message) {
@@ -340,7 +341,7 @@ class _ChatPageState extends State<ChatPage> {
 
   void _handleSendPressed(types.PartialText message) {
     int index = Random().nextInt(2);
-    var textMessage;
+    types.TextMessage textMessage;
     if (index == 0) {
       textMessage = types.TextMessage(
         author: _user,
