@@ -5,7 +5,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -19,27 +18,9 @@ import 'package:uuid/uuid.dart';
 import 'package:bubble/bubble.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-void main() {
-  initializeDateFormatting().then((_) => runApp(const MyApp()));
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) => const MaterialApp(
-        home: ChatPage(),
-      );
-}
-
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
-
+  String _address;
+  ChatPage(this._address);
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -62,14 +43,6 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(40.421255, -86.9323616);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -78,7 +51,7 @@ class _ChatPageState extends State<ChatPage> {
           backgroundColor: Colors.white,
           flexibleSpace: SafeArea(
             child: Container(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 children: <Widget>[
                   IconButton(
