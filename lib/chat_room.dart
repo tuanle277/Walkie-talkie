@@ -20,7 +20,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChatPage extends StatefulWidget {
   final String _address;
-  ChatPage(this._address);
+  final List<String> _idInChat;
+  ChatPage(this._address, this._idInChat);
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -170,9 +171,11 @@ class _ChatPageState extends State<ChatPage> {
       );
 
   void _addMessage(types.Message message) {
-    setState(() {
-      _messages.insert(0, message);
-    });
+    if (widget._idInChat.contains(message.author.id)) {
+      setState(() {
+        _messages.insert(0, message);
+      });
+    }
   }
 
   void _handleAttachmentPressed() {

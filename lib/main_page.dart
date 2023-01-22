@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:walk/helper/des_card.dart';
-import 'package:walk/helper/normal_card.dart';
 import 'package:overlay_support/overlay_support.dart';
 import './model/request.dart';
 import 'chat_room.dart';
@@ -45,82 +44,11 @@ class _MainPageState extends State<MainPage> {
     int appear = Random().nextInt(2000) + 3000;
     Function eq = const ListEquality().equals;
 
-    Future.delayed(
-      Duration(milliseconds: appear),
-      () {
-// Here you can write your code
-        sendSMS("+17657122276");
-
-        showOverlayNotification((context) {
-          return Card(
-            color: Colors.amber,
-            child: InkWell(
-              onTap: (() {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'A Brown',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    content: const Text(
-                      "Class year: 2022 \n\nDo you want to walk with this person?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('No'),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text('Yes'),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              child: SafeArea(
-                child: ListTile(
-                  leading: SizedBox.fromSize(
-                    size: const Size(40, 40),
-                    child: ClipOval(
-                      child: Container(
-                        color: Colors.blue[300],
-                      ),
-                    ),
-                  ),
-                  title: const Text(
-                    'Sarah',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: const Text('Wants to walk with you!'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      OverlaySupportEntry.of(context)?.dismiss();
-                    },
-                  ),
-                ),
-              ),
-            ),
-          );
-        }, duration: const Duration(milliseconds: 5000));
-      },
-    );
-
-    String requestType = "house";
     final _radiusController = TextEditingController();
     final _address = TextEditingController();
+    final _listOfUsersInChat = ["483"];
     Size mediaQuery = MediaQuery.of(context).size;
     bool chosen = false;
-    var items = ["house", "other"];
     Color cardColor = chosen ? Colors.green[300]! : Colors.grey[100]!;
 
     return Scaffold(
@@ -140,17 +68,15 @@ class _MainPageState extends State<MainPage> {
                 ) {
                   return InkWell(
                     onTap: () {
-                      bool _exist = false;
-                      print(_myRequest);
+                      bool exist = false;
                       for (int i = 0; i < _myRequest.length; ++i) {
                         if (_myRequest[i] ==
                             widget._listOfCard[index].request) {
-                          _exist = true;
+                          exist = true;
                           break;
                         }
                       }
-                      print(_exist);
-                      if (!_exist) {
+                      if (!exist) {
                         widget._listOfCard[index].request.chosen
                             ? showDialog<String>(
                                 context: context,
@@ -224,7 +150,8 @@ class _MainPageState extends State<MainPage> {
                           MaterialPageRoute(
                             builder: (context) {
                               return ChatPage(
-                                  widget._listOfCard[index].request.address);
+                                  widget._listOfCard[index].request.address,
+                                  _listOfUsersInChat);
                             },
                           ),
                         );
@@ -326,6 +253,93 @@ class _MainPageState extends State<MainPage> {
                                       _myRequest.add(newRe);
                                       widget.addRe(newRe);
                                       Navigator.pop(context);
+
+                                      Future.delayed(
+                                        Duration(milliseconds: appear),
+                                        () {
+                                          sendSMS("+17657122276");
+                                          showOverlayNotification((context) {
+                                            return Card(
+                                              color: Colors.amber,
+                                              child: InkWell(
+                                                onTap: (() {
+                                                  showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      title: const Text(
+                                                        'A Brown',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      content: const Text(
+                                                        "Class year: 2022 \n\nDo you want to walk with this person?",
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  context),
+                                                          child:
+                                                              const Text('No'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            _listOfUsersInChat
+                                                                .add("844");
+                                                          },
+                                                          child:
+                                                              const Text('Yes'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
+                                                child: SafeArea(
+                                                  child: ListTile(
+                                                    leading: SizedBox.fromSize(
+                                                      size: const Size(40, 40),
+                                                      child: ClipOval(
+                                                        child: Container(
+                                                          color:
+                                                              Colors.blue[300],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    title: const Text(
+                                                      'A Brown',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    subtitle: const Text(
+                                                        'Wants to walk with you!'),
+                                                    trailing: IconButton(
+                                                      icon: const Icon(
+                                                          Icons.close),
+                                                      onPressed: () {
+                                                        OverlaySupportEntry.of(
+                                                                context)
+                                                            ?.dismiss();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                              duration: const Duration(
+                                                  milliseconds: 5000));
+                                        },
+                                      );
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
