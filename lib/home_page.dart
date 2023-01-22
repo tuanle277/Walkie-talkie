@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: InkWell(
-        onTap: () => changeScreen("/signinpage"),
+        onTap: () => changeScreen("signinpage"),
         child: SizedBox(
           height: mediaQuery.height,
           width: mediaQuery.width,

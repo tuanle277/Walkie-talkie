@@ -27,8 +27,8 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
-  final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
-  final _user1 = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3aw');
+  final _user = const types.User(id: '1');
+  final _user1 = const types.User(id: '2');
   int _selectedIndex = 0;
 
   @override
@@ -82,7 +82,9 @@ class _ChatPageState extends State<ChatPage> {
                         Text(
                           "Going to: " + widget._address,
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.06,
+                              fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 6,
@@ -109,9 +111,9 @@ class _ChatPageState extends State<ChatPage> {
           onTap: _onItemTapped,
           selectedFontSize: 20,
           selectedIconTheme:
-              IconThemeData(color: Colors.orangeAccent, size: 24),
+              const IconThemeData(color: Colors.orangeAccent, size: 24),
           selectedItemColor: Colors.orangeAccent,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           type: BottomNavigationBarType.shifting,
         ),
         body: _selectedIndex == 0

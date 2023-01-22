@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:walk/model/request_card.dart';
@@ -7,19 +9,25 @@ import './model/user.dart';
 import 'package:walk/sign_in_screen.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:overlay_support/overlay_support.dart';
-
-import 'package:walk/sign_in_screen.dart';
 import 'package:walk/main_page.dart';
 import 'home_page.dart';
-import 'chat_room.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return OverlaySupport(
@@ -31,6 +39,36 @@ class MyApp extends StatelessWidget {
     ));
   }
 }
+// Future<RequestCard> fetchAlbum() async {
+//   final response = await http.get('https://jsonplaceholder.typicode.com/albums/1');
+
+//   if (response.statusCode == 200) {
+//     return RequestCard.fromJson(json.decode(response.body));
+//   } else {
+//     throw Exception('Failed to load album');
+//   }
+// }
+
+const URL = 'https://jsonplaceholder.typicode.com/photos';
+
+List<RequestCard> parseRequest(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<RequestCard>((json) => RequestCard.fromJson(json)).toList();
+}
+
+Future<List<RequestCard>> fetchPhotos(http.Client client) async {
+  final response = await client.get(Uri.parse(URL));
+
+  // Use the compute function to run parsePhotos in a separate isolate.
+  return parseRequest(response.body);
+}
+
+// fetchRequestData(http.Client client) async {
+//   var url = Uri.parse();
+//   var response = http.get(url);
+//   var data = jsonDecode(response.body);
+// }
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -55,44 +93,63 @@ class _MyHomePageState extends State<MyHomePage> {
     _getUserPosition();
   }
 
-  final List _dummyListOfRequest = [
-    Request("925 Hilltop dr", 2.1),
-    Request("32 jump street", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request("Common drive", 2.1),
-    Request(
-        "32 jump street (such as a letter or package) an envelope with an illegible address.",
-        2.1),
-    Request("Common drive", 2.1),
+  final List<UserInfo> _dummyListOfUsers = [
+    UserInfo("479", "a Brown", "2022", "abrown_2022@purdue.edu", "brownie"),
+    UserInfo("480", "Tuan Le", "2025", "tuanle_2025@purdue.edu", "tuantuan1"),
+    UserInfo(
+        "481", "Khoi Pham", "2025", "khoipham_2025@purdue.edu", "khoipham2003"),
+    UserInfo("482", "b Harvard", "2024", "bharvard_2024@purdue.edu",
+        "harvardisgood"),
+    UserInfo(
+        "483", "Dat Vuong", "2023", "datvuong_2023@purdue.edu", "datvuong"),
   ];
 
-  final List _dummyListOfCard = [
+  List _dummyListOfCard = [
     RequestCard(Request("925 Hilltop dr", 2.1), 40.425869, -86.908066),
-    RequestCard(Request("something", 3.1), 40.025869, -84.908066),
-    RequestCard(Request("yes", 1.1), 38.425869, -80.908066),
-    RequestCard(Request("candice st", 1.3), 40.215869, -90.928066),
-    RequestCard(Request("chocoma dr", 5.1), 30.425869, -84.902066),
-    RequestCard(Request("23 jump street st", 0.6), 39.325869, -83.908096),
+    RequestCard(Request("478 Blackburn St.Adrian, MI 49221", 3.1), 40.025869,
+        -84.908066),
+    RequestCard(Request("55 N. Fieldstone Ave. Mishawaka, IN 46544", 1.1),
+        38.425869, -80.908066),
+    RequestCard(Request("9609 South Gregory St. Owosso, MI 48867", 1.3),
+        40.215869, -90.928066),
+    RequestCard(Request("411 Golden Star St.Mocksville, NC 27023", 5.1),
+        30.425869, -84.902066),
+    RequestCard(Request("8815 North Poor House Road Oviedo, FL 32765", 0.6),
+        39.325869, -83.908096),
   ];
 
   addRe(request) {
-    setState(() {
-      _dummyListOfCard.insert(0, RequestCard(request, 38.425869, -80.908066));
-    });
+    setState(
+      () {
+        _dummyListOfCard.insert(0, RequestCard(request, 38.425869, -80.908066));
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Walk with me',
+      title: 'Walkie Talkie',
       theme: ThemeData(fontFamily: 'Montserrat'),
-      home: const HomePage(),
+      home: FutureBuilder<List<RequestCard>>(
+        future: fetchPhotos(http.Client()),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return HomePage();
+          } else if (snapshot.hasData) {
+            _dummyListOfCard = snapshot.data!;
+            return HomePage();
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
       routes: {
-        '/signinpage': (context) => SignInScreen(),
-        '/mainpage': ((context) => MainPage(_dummyListOfCard, addRe)),
+        'signinpage': (context) => SignInScreen(_dummyListOfUsers),
+        'mainpage': ((context) => MainPage(_dummyListOfCard, addRe)),
         // '/chatroom': ((context) => ChatPage())
       },
     );

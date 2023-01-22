@@ -36,7 +36,7 @@ TwilioFlutter twilioFlutter = TwilioFlutter(
 
 void sendSMS(String number) async {
   twilioFlutter.sendSMS(
-      toNumber: number, messageBody: 'Sarah wants to walk with you!');
+      toNumber: number, messageBody: 'A wants to walk with you!');
 }
 
 class _MainPageState extends State<MainPage> {
@@ -45,71 +45,76 @@ class _MainPageState extends State<MainPage> {
     int appear = Random().nextInt(2000) + 3000;
     Function eq = const ListEquality().equals;
 
-    Future.delayed(Duration(milliseconds: appear), () {
+    Future.delayed(
+      Duration(milliseconds: appear),
+      () {
 // Here you can write your code
-      sendSMS("+17657122276");
+        sendSMS("+17657122276");
 
-      showOverlayNotification((context) {
-        return Card(
-          color: Colors.amber,
-          child: InkWell(
-            onTap: (() {
-              showDialog<String>(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
+        showOverlayNotification((context) {
+          return Card(
+            color: Colors.amber,
+            child: InkWell(
+              onTap: (() {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(
+                      'A Brown',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    content: const Text(
+                      "Class year: 2022 \n\nDo you want to walk with this person?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('No'),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('Yes'),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              child: SafeArea(
+                child: ListTile(
+                  leading: SizedBox.fromSize(
+                    size: const Size(40, 40),
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.blue[300],
+                      ),
+                    ),
+                  ),
                   title: const Text(
-                    'Sarah Brown',
+                    'Sarah',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  content: const Text(
-                    "Class year: 2022 \n\nDo you want to walk with this person?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('No'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Yes'),
-                    ),
-                  ],
-                ),
-              );
-            }),
-            child: SafeArea(
-              child: ListTile(
-                leading: SizedBox.fromSize(
-                  size: const Size(40, 40),
-                  child: ClipOval(
-                    child: Container(
-                      color: Colors.blue[300],
-                    ),
-                  ),
-                ),
-                title: const Text(
-                  'Sarah',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: const Text('Wants to walk with you!'),
-                trailing: IconButton(
+                  subtitle: const Text('Wants to walk with you!'),
+                  trailing: IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () {
                       OverlaySupportEntry.of(context)?.dismiss();
-                    }),
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      }, duration: const Duration(milliseconds: 5000));
-    });
+          );
+        }, duration: const Duration(milliseconds: 5000));
+      },
+    );
+
     String requestType = "house";
     final _radiusController = TextEditingController();
     final _address = TextEditingController();
@@ -117,6 +122,7 @@ class _MainPageState extends State<MainPage> {
     bool chosen = false;
     var items = ["house", "other"];
     Color cardColor = chosen ? Colors.green[300]! : Colors.grey[100]!;
+
     return Scaffold(
       body: SizedBox(
         height: mediaQuery.height,
@@ -234,13 +240,14 @@ class _MainPageState extends State<MainPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: SizedBox(
-                            height: mediaQuery.height * 0.2,
-                            child: DesCard(
-                              widget._listOfCard[index].request.address,
-                              widget._listOfCard[index].request.distance
-                                      .toString() +
-                                  "km",
-                            )),
+                          height: mediaQuery.height * 0.2,
+                          child: DesCard(
+                            widget._listOfCard[index].request.address,
+                            widget._listOfCard[index].request.distance
+                                    .toString() +
+                                "km",
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -289,7 +296,7 @@ class _MainPageState extends State<MainPage> {
                                       decoration: const InputDecoration(
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.auto,
-                                        labelText: "exposure radius",
+                                        labelText: "Exposure radius",
                                         labelStyle: TextStyle(
                                           color: Colors.amber,
                                           fontWeight: FontWeight.bold,
@@ -299,14 +306,14 @@ class _MainPageState extends State<MainPage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: mediaQuery.width * 0.04,
-                                  ),
-                                  SizedBox(
-                                    width: mediaQuery.width * 0.04,
+                                    width: mediaQuery.width * 0.09,
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.amber,
+                                      shadowColor:
+                                          Colors.red, // elevation color
+                                      elevation: 6, // elevation of button
                                     ),
                                     onPressed: () {
                                       if (_address.text.isEmpty ||
@@ -322,13 +329,13 @@ class _MainPageState extends State<MainPage> {
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
-                                      width: mediaQuery.width * 0.2,
+                                      width: mediaQuery.width * 0.24,
                                       height: mediaQuery.height * 0.065,
                                       child: Text(
                                         "Submit request",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: mediaQuery.width * 0.025),
+                                            fontSize: mediaQuery.width * 0.029),
                                       ),
                                     ),
                                   ),
