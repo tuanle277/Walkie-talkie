@@ -48,27 +48,54 @@ class _MyAppState extends State<MyApp> {
 //     throw Exception('Failed to load album');
 //   }
 // }
-
 const URL = 'https://jsonplaceholder.typicode.com/photos';
 
-List<RequestCard> parseRequest(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<RequestCard>((json) => RequestCard.fromJson(json)).toList();
-}
-
-Future<List<RequestCard>> fetchPhotos(http.Client client) async {
+Future<List<RequestCard>> fetchRequest(http.Client client) async {
   final response = await client.get(Uri.parse(URL));
-
-  // Use the compute function to run parsePhotos in a separate isolate.
-  return parseRequest(response.body);
+  if (response.statusCode == 200) {
+    return (json.decode(response.body) as List)
+        .map((myMap) => RequestCard.fromJson(myMap))
+        .toList();
+  } else {
+    if (response.statusCode == 404) {
+      return [];
+    } else {
+      throw Exception("Failed to load post!");
+    }
+  }
 }
 
-// fetchRequestData(http.Client client) async {
-//   var url = Uri.parse();
-//   var response = http.get(url);
-//   var data = jsonDecode(response.body);
-// }
+Future<http.Response> createUser(RequestCard requestCard) {
+  return http.post(
+    Uri.parse(URL),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'address': requestCard.request.address,
+      'distance': requestCard.request.distance.toString(),
+      'longitude': requestCard.longtitude.toString(),
+      'latitude': requestCard.latitude.toString(),
+    }),
+  );
+}
+
+const URLU = "";
+
+Future<List<UserInfo>> fetchUsers(http.Client client) async {
+  final response = await client.get(Uri.parse(URL));
+  if (response.statusCode == 200) {
+    return (json.decode(response.body) as List)
+        .map((myMap) => UserInfo.fromJson(myMap))
+        .toList();
+  } else {
+    if (response.statusCode == 404) {
+      return [];
+    } else {
+      throw Exception("Failed to load post!");
+    }
+  }
+}
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -93,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _getUserPosition();
   }
 
-  final List<UserInfo> _dummyListOfUsers = [
+  List<UserInfo> _dummyListOfUsers = [
     UserInfo("479", "a Brown", "2022", "abrown_2022@purdue.edu", "brownie"),
     UserInfo("480", "Tuan Le", "2025", "tuanle_2025@purdue.edu", "tuantuan1"),
     UserInfo(
@@ -104,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
         "483", "Dat Vuong", "2023", "datvuong_2023@purdue.edu", "datvuong"),
   ];
 
-  List _dummyListOfCard = [
+  final List _dummyListOfCard = [
     RequestCard(Request("925 Hilltop dr", 2.1), 40.425869, -86.908066),
     RequestCard(Request("478 Blackburn St.Adrian, MI 49221", 3.1), 40.025869,
         -84.908066),
@@ -132,13 +159,13 @@ class _MyHomePageState extends State<MyHomePage> {
       debugShowCheckedModeBanner: false,
       title: 'Walkie Talkie',
       theme: ThemeData(fontFamily: 'Montserrat'),
-      home: FutureBuilder<List<RequestCard>>(
-        future: fetchPhotos(http.Client()),
+      home: FutureBuilder<List<UserInfo>>(
+        future: fetchUsers(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return HomePage();
           } else if (snapshot.hasData) {
-            _dummyListOfCard = snapshot.data!;
+            _dummyListOfUsers = snapshot.data!;
             return HomePage();
           } else {
             return const Center(
