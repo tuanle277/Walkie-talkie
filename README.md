@@ -2,23 +2,23 @@
 An app to help students walk together back to their houses at night.
 
 Features:
-- Interactive UX.
-- Models adapted for API data fetching.
+- Interactive UX. 
+- Nested object models adapted for API data fetching.
 - User identification using local dummy database (should be the entire student database of a school, including username/email and password)
 - Upload a request (either house destination or other verified places) and updates local and online database accordingly, choose a request that you want to walk with
 - Interactive chatbox with encoded user ids (the students' particular ids).
-- Local notification using overlay support, SMS notification using Twilio (trial).
+- Local notification using overlay support, SMS notification using Twilio (trial). Getting user's current location, and current time for data science analysis.
 - Integrated google map with address selection and commutes and transmit to aid the walking process.
 
 
-<img width="501" alt="Screenshot 2023-01-21 at 3 27 57 AM" src="https://user-images.githubusercontent.com/91571142/213858938-654ca0a1-fcf0-471a-9c53-4073bb297a2f.png">
-<img width="501" alt="Screenshot 2023-01-21 at 3 28 10 AM" src="https://user-images.githubusercontent.com/91571142/213858939-ea2f0858-adda-40b9-b231-cdb8c0d3ecc8.png">
-<img width="501" alt="Screenshot 2023-01-21 at 3 29 24 AM" src="https://user-images.githubusercontent.com/91571142/213858941-42209f7b-9836-4da3-99f7-80a3245e596e.png">
-<img width="499" alt="Screenshot 2023-01-21 at 3 29 38 AM" src="https://user-images.githubusercontent.com/91571142/213858942-e0993c8c-a79f-4f21-a553-35cdac893233.png">
-<img width="499" alt="Screenshot 2023-01-21 at 3 30 38 AM" src="https://user-images.githubusercontent.com/91571142/213858944-469e8338-1e55-497e-a15f-c2c74de1571a.png">
-<img width="500" alt="Screenshot 2023-01-21 at 3 31 11 AM" src="https://user-images.githubusercontent.com/91571142/213858945-88f96119-1f5e-46e2-a09d-57c7f8b23258.png">
-<img width="500" alt="Screenshot 2023-01-21 at 3 31 44 AM" src="https://user-images.githubusercontent.com/91571142/213858946-cc270e56-12c8-44de-8b32-be7c6a9dbc8f.png">
-<img width="502" alt="Screenshot 2023-01-21 at 7 57 44 AM" src="https://user-images.githubusercontent.com/91571142/213867893-11b4fd56-79c7-4383-86ee-6a84ad382fc5.png">
-<img width="500" alt="Screenshot 2023-01-21 at 11 30 38 AM" src="https://user-images.githubusercontent.com/91571142/213876801-2da96563-3824-418f-b9fb-58533635d946.png">
-<img width="501" alt="Screenshot 2023-01-21 at 11 30 50 AM" src="https://user-images.githubusercontent.com/91571142/213876810-8f5cfb52-3437-45a9-b6c4-8d2e70b19800.png">
+<img width="501" alt="Screenshot 2023-01-22 at 4 20 11 AM" src="https://user-images.githubusercontent.com/91571142/213909610-bf7d07a7-f4ea-4e49-923a-d9e43765e57e.png">
+<img width="501" alt="Screenshot 2023-01-22 at 4 20 33 AM" src="https://user-images.githubusercontent.com/91571142/213909611-5b658e54-5ec0-4397-8186-2721b697c843.png">
+<img width="501" alt="<img width="502" alt="Screenshot 2023-01-21 at 7 57 44 AM" src="https://user-images.githubusercontent.com/91571142/213909631-c717cb03-167b-4058-b258-fc6321a04ff6.png"> 2023-01-21 at 3 28 10 AM" src="https://user-images.githubusercontent.com/91571142/213909612-ef428ad5-4d7b-4cce-9a88-9d3f4ac1b122.png">
+<img width="499" alt="Screenshot 2023-01-21 at 3 29 38 AM" src="https://user-images.githubusercontent.com/91571142/213909613-9105b032-9eda-4604-bdec-35cab9f054c5.png">
+<img width="502" alt="Screenshot 2023-01-22 at 4 21 11 AM" src="https://user-images.githubusercontent.com/91571142/213909615-fcc835de-64be-466e-a5ea-738ece382c1e.png">
+<img width="499" alt="Screenshot 2023-01-21 at 3 30 38 AM" src="https://user-images.githubusercontent.com/91571142/213909618-62339c0b-f3c8-42a8-8d05-3bfa1bddb452.png">
+<img width="500" alt="Screenshot 2023-01-21 at 3 31 11 AM" src="https://user-images.githubusercontent.com/91571142/213909619-a402631b-2dea-4ea8-bbfd-54e968ad53ff.png">
+<img width="500" alt="Screenshot 2023-01-21 at 3 31 44 AM" src="https://user-images.githubusercontent.com/91571142/213909621-4f9bfe06-7554-4c17-b203-e5fbf662175e.png">
+<img width="502" alt="Screenshot 2023-01-21 at 8 56 30 AM" src="https://user-images.githubusercontent.com/91571142/213909624-f1246ed3-6f15-4dc0-b2c5-11e66db6427b.png">
+
 
