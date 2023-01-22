@@ -16,7 +16,8 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bubble/bubble.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlng/latlng.dart';
 
 class ChatPage extends StatefulWidget {
   String _address;
@@ -31,10 +32,26 @@ class _ChatPageState extends State<ChatPage> {
   final _user1 = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3aw');
   int _selectedIndex = 0;
 
+  late Position position;
+
+  Future<Position> _getUserPosition() async {
+    Position userLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      position = userLocation;
+    });
+
+    return position;
+  }
+
+  late final LatLng _center;
+
+
   @override
   void initState() {
     super.initState();
     _loadMessages();
+    _center = _getUserPosition() as LatLng;
   }
 
   void _onItemTapped(int index) {

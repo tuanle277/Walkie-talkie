@@ -5,10 +5,10 @@ class RequestDialog extends StatefulWidget {
 
   RequestDialog(this.chosen);
   @override
-  State<RequestDialog> createState() => _RequestDialogeState();
+  State<RequestDialog> createState() => _RequestDialogueState();
 }
 
-class _RequestDialogeState extends State<RequestDialog> {
+class _RequestDialogueState extends State<RequestDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
