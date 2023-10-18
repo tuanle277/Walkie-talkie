@@ -1,16 +1,19 @@
 
-An app to help students walk together back to their houses at night.
+An app to help students walk together back to their houses at night. The catch is that only students in a certain school can see and interact with each other
 
-Features:
+*Existing Features*
 - Interactive UX. 
 - Nested object models adapted for API data fetching.
 - User identification using local dummy database (should be the entire student database of a school, including username/email and password)
-- Upload a request (either house destination or other verified places) and updates local and online database accordingly, choose a request that you want to walk with
-- Interactive chatbox with encoded user ids (the students' particular ids).
-- Local notification using overlay support, SMS notification using Twilio (trial). Getting user's current location, and current time for data science analysis.
-- Integrated google map with address selection and commutes and transmit to aid the walking process.
+- Upload a request (either house destination or other verified places) and update the local and online database accordingly, choose a request that you want to walk with
+- Interactive chatbox with encoded user IDs (the students' particular student IDs assigned by the school).
+- Local notification using overlay support, SMS notification using Twilio (trial). Getting the user's current location, and current time for data science analysis.
 
-
+*Future Features"
+- Integrated Google map with address selection and commutes and transmit to aid the walking process.
+- Chatbox feature allowing real-time chatting between many users and a database for storing individual chat groups.
+- Virtual database for storing user information (access to the school's database is planned) and requests for dashboard localization.
+- 
 <img width="501" alt="Screenshot 2023-01-22 at 4 20 11 AM" src="https://user-images.githubusercontent.com/91571142/213909610-bf7d07a7-f4ea-4e49-923a-d9e43765e57e.png">
 <img width="501" alt="Screenshot 2023-01-22 at 4 20 33 AM" src="https://user-images.githubusercontent.com/91571142/213909611-5b658e54-5ec0-4397-8186-2721b697c843.png">
 <img width="501" alt="<img width="502" alt="Screenshot 2023-01-21 at 7 57 44 AM" src="https://user-images.githubusercontent.com/91571142/213909631-c717cb03-167b-4058-b258-fc6321a04ff6.png"> 2023-01-21 at 3 28 10 AM" src="https://user-images.githubusercontent.com/91571142/213909612-ef428ad5-4d7b-4cce-9a88-9d3f4ac1b122.png">
